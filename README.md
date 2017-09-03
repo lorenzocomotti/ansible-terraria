@@ -1,5 +1,9 @@
 # Terraria-server-Ansible
 
+Install your Terraira server in your centos Machine with Ansible
+This palybook automatically installs the server, configures the firewall, and integrates management with systemd.<br>
+The server version is 1.353
+
 # How to Install Terraria Server
 1- Run "yum update"<br>
 2- Run "yum install epel-release"<br>
