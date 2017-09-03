@@ -1,0 +1,10 @@
+---
+
+- name: Terraria-Server
+  hosts: 127.0.0.1
+  roles:
+     - upgrade
+     - firewalld
+     - iptables
+     - terraria
+     - systemd

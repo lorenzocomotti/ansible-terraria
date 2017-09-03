@@ -1,0 +1,64 @@
+---
+
+- name: Download Terraria Server
+  shell: "cd /opt && sudo curl -O http://terraria.org/server/terraria-server-1353.zip"
+
+- name: Install Unzip
+  yum: name=unzip state=present
+
+- name: Extract the archive 
+  shell: "mkdir -p /opt/terraria && unzip -o /opt/terraria-server-1353.zip -d /opt/terraria && mv -vn /opt/terraria/1353/* /opt/terraria/ && rm -R -f /opt/1353 "
+
+- name: Set Permission
+  shell: "chown -R root:root /opt/terraria && chmod +x /opt/terraria/Linux/TerrariaServer.bin.x86_64"
+
+- name: Creation Terraria User
+  shell: "id -u terraria &>/dev/null || useradd -r -m -d /srv/terraria terraria"
+
+- name: Creation Configuration File
+  shell: "touch /opt/terraria/Linux/serverconfig.txt"
+
+- name: Configuration World size
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^autocreate='
+              line='autocreate={{world_size}}'
+
+- name: Configuration Max Players 
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^maxplayers='
+              line='maxplayers={{maxplayers}}'
+
+- name: Configuration world Path
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^world='
+              line='world=/srv/terraria/Worlds/MyWorld.wld'
+
+- name: Configuration World Password
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^password='
+              line='password={{password}}'
+
+- name: Configuration World Message of the Day
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^motd='
+              line='motd={{Motd}}'
+
+- name: Configuration World Difficulty
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^difficulty='
+              line='difficulty={{difficulty}}'
+
+- name: Configuration World Security
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^secure='
+              line='secure={{security}}'
+
+- name: Configuration World Language
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^language='
+              line='language={{language}}'
+
+- name: Configuration World Name
+  lineinfile: path=/opt/terraria/Linux/serverconfig.txt
+              regexp='^worldname='
+              line='worldname={{worldname}}'

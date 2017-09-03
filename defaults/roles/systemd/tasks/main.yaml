@@ -1,0 +1,13 @@
+---
+
+- name: Install Screen
+  yum: name=screen state=present
+
+- name: Configure Systemd
+  synchronize: src=../files/ dest=/
+  
+- name: Set permission systemd
+  shell: "chmod +x /usr/local/bin/terrariad"
+  
+- name: Start Terraria Server
+  service: name=terraira status=started
