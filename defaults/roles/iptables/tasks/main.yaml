@@ -1,4 +1,0 @@
----
-
-- name: Configure IPtables Rules
-  shell: "iptables -A INPUT -p tcp --dport 7777 -j ACCEPT"

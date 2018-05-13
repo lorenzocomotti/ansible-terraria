@@ -1,0 +1,33 @@
+---
+
+- name: Download Terraria Server 1.3.5.3
+  shell: "cd /opt && sudo curl -O http://terraria.org/server/terraria-server-1353.zip"
+
+- name: Install Unzip
+  yum: name=unzip update_cache=yes state=present
+
+- name: Extract the archive 
+  shell: "mkdir -p /opt/terraria && unzip -o /opt/terraria-server-1353.zip -d /opt/terraria && mv -vn /opt/terraria/1353/* /opt/terraria/ && rm -R -f /opt/1353"
+
+- name: Set Permission
+  shell: "chown -R root:root /opt/terraria && chmod +x /opt/terraria/Linux/TerrariaServer.bin.x86_64"
+
+- name: Creation Terraria User
+  shell: "id -u terraria &>/dev/null || useradd -r -m -d /srv/terraria terraria"
+
+- name: Creation Configuration File
+  template:
+    src: serverconfig.txt.j2
+    dest: /opt/terraria/Linux/serverconfig.txt
+
+- name: Install Screen
+  yum: name=screen state=present
+
+- name: Configure Systemd
+  synchronize: src=../files/ dest=/
+
+- name: Set permission systemd
+  shell: "chmod +x /usr/local/bin/terrariad"
+
+- name: Start Terraria Server
+  service: name=terraira status=started

@@ -1,6 +1,0 @@
----
-
-- name: Upgrading system packages
-  yum: name=* state=latest
-  retries: 10
-  delay: 2

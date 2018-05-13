@@ -1,0 +1,36 @@
+---
+
+# Terraria Server Configuration
+
+# Load a world and automatically start the server.
+world: "/var/terraria-worlds/myworld.wld"
+
+maxplayers: "8"
+password: "terraria"
+Motd: "Welcome!"
+
+# World size is specified by: 1(small), 2(medium), and 3(large)
+world_size: "1"
+
+# Sets world difficulty when using -autocreate. Options: 0(normal), 1(expert)
+difficulty: "0"
+
+worldname: "World"
+
+# Adds additional cheat protection.
+security: "1"
+
+# Sets the folder where world files will be stored
+worldpath: "/var/terraria-worlds"
+
+language: "en/US"
+#vailable codes:
+#en/US = English
+#de/DE = German
+#it/IT = Italian
+#fr/FR = French
+#es/ES = Spanish
+#ru/RU = Russian
+#zh/Hans = Chinese
+#pt/BR = Portuguese
+#pl/PL = Polish
