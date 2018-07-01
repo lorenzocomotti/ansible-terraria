@@ -1,3 +1,5 @@
+[![Galaxy](https://img.shields.io/badge/galaxy-lorenzocomotti.ansible--role--terraria-blue.svg?style=flat-square)](https://galaxy.ansible.com/lorenzocomotti/ansible-role-terraria)
+
 # Terraria-server-Ansible
 
 Install your Terraira server in your centos Machine with Ansible
