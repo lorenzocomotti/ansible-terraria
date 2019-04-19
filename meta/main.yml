@@ -1,15 +1,15 @@
 galaxy_info:
   author: Lorenzo Comotti
-  description: Install terraria-server for Centos
-
-  license: license (GPLv3, CC-BY, etc)
-
-  min_ansible_version: 1.2
-  
+  description: Install terraria-server for ubuntu server
+  license: MIT
+  min_ansible_version: 2.4
   platforms:
-  - name: Cenros
-     - 7
-
-  galaxy_tags: [terraria]
+    - name: Ubuntu
+      version:
+        - xenial
+        - bionic
+  galaxy_tags:
+    - terraria
+    - molecule
 
   dependencies: []

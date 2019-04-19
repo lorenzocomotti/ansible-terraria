@@ -1,13 +1,35 @@
 ---
 
+- name: Update repositories cache and install "unzip" package
+  apt:
+    name: unzip
+    update_cache: yes
+    state: present
+
+- name: Update repositories cache and install "screen" package
+  apt:
+    name: screen
+    update_cache: yes
+    state: present
+
 - name: Download Terraria Server 1.3.5.3
-  shell: "cd /opt && sudo curl -O http://terraria.org/server/terraria-server-1353.zip"
+  get_url:
+    url: "http://terraria.org/server/terraria-server-1353.zip"
+    dest: "/opt"
+    mode: 0440
 
-- name: Install Unzip
-  yum: name=unzip update_cache=yes state=present
+- name: Creates work directory
+  file:
+    path: /opt/terraria
+    state: directory
 
-- name: Extract the archive 
-  shell: "mkdir -p /opt/terraria && unzip -o /opt/terraria-server-1353.zip -d /opt/terraria && mv -vn /opt/terraria/1353/* /opt/terraria/ && rm -R -f /opt/1353"
+- name: Extract terraria.zip into /opt/terraria
+  unarchive:
+    src: "/opt/terraria-server-1353.zip"
+    dest: "/opt/terraria"
+
+- name: delete unused folder 
+  shell: "mv -vn /opt/terraria/1353/* /opt/terraria/ && rm -R -f /opt/1353"
 
 - name: Set Permission
   shell: "chown -R root:root /opt/terraria && chmod +x /opt/terraria/Linux/TerrariaServer.bin.x86_64"
@@ -17,17 +39,19 @@
 
 - name: Creation Configuration File
   template:
-    src: serverconfig.txt.j2
-    dest: /opt/terraria/Linux/serverconfig.txt
-
-- name: Install Screen
-  yum: name=screen state=present
+    src: "serverconfig.txt.j2"
+    dest: "/opt/terraria/Linux/serverconfig.txt"
 
 - name: Configure Systemd
-  synchronize: src=../files/ dest=/
+  synchronize: 
+    src: files/ 
+    dest: /
 
-- name: Set permission systemd
+- name: Set systemd permission
   shell: "chmod +x /usr/local/bin/terrariad"
 
 - name: Start Terraria Server
-  service: name=terraira status=started
+  service: 
+    name: terraira
+    enabled: yes 
+    status: restarted

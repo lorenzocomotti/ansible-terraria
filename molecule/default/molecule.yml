@@ -1,0 +1,33 @@
+---
+lint:
+  enabled: False
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: master
+    groups:
+      - terraria
+provisioner:
+  name: ansible
+  options:
+    diff: True
+    v: True
+  playbooks:
+    create: create.yml
+    prepare: prepare.yml
+    destroy: destroy.yml
+scenario:
+  name: default
+  test_sequence:
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    - verify
+    - destroy
+verifier:
+  name: goss

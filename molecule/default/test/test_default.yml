@@ -1,0 +1,10 @@
+---
+port:
+  tcp:7777:
+    listening: true
+    ip:
+      - 0.0.0.0
+service:
+  terraria:
+    enabled: true
+    running: true
