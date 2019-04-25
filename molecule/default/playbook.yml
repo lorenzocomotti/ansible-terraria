@@ -4,6 +4,6 @@
   gather_facts: True
 
 - name: run the main role
-  hosts: 127.0.0.1
+  hosts: all
   roles:
     - {role: ansible-role-terraria}

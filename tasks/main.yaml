@@ -16,7 +16,7 @@
   get_url:
     url: "http://terraria.org/server/terraria-server-1353.zip"
     dest: "/opt"
-    mode: 0440
+    mode: 0664
 
 - name: Creates work directory
   file:
