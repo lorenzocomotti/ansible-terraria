@@ -6,4 +6,4 @@ services:
     volumes:
       - .:/root/src/ansible-role-terraria
       - /var/run/docker.sock:/var/run/docker.sock
-    working_dir: /root/src/ansible-role-terraria
+    working_dir: /root/src/ansible-terraria

@@ -9,4 +9,4 @@
   become_user: root
   hosts: 127.0.0.1
   roles:
-    - {role: ansible-role-terraria}
+    - role: ansible-terraria

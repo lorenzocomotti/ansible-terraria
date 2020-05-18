@@ -12,10 +12,10 @@
     update_cache: yes
     state: present
 
-- name: Download Terraria Server 1.3.5.3
+- name: Download Terraria Server
   get_url:
-    url: "http://terraria.org/server/terraria-server-1353.zip"
-    dest: "/opt"
+    url: "{{ download_server_link }}"
+    dest: "/opt/terraria-server.zip"
     mode: 0664
 
 - name: Creates work directory
@@ -23,16 +23,28 @@
     path: /opt/terraria
     state: directory
 
+- name: Creates release directory
+  file:
+    path: /opt/terraria/release
+    state: directory
+
 - name: Extract terraria.zip into /opt/terraria
   unarchive:
-    src: "/opt/terraria-server-1353.zip"
-    dest: "/opt/terraria"
+    src: "/opt/terraria-server.zip"
+    dest: "/opt/terraria/release"
 
 - name: delete unused folder 
-  shell: "mv -vn /opt/terraria/1353/* /opt/terraria/ && rm -R -f /opt/1353"
+  shell: "mv -vn /opt/terraria/release/*/* /opt/terraria/ && rm -Rf /opt/terraria/release/* && mv /opt/terraria-server.zip /opt/terraria/release"
 
-- name: Set Permission
-  shell: "chown -R root:root /opt/terraria && chmod +x /opt/terraria/Linux/TerrariaServer.bin.x86_64"
+- name: Set Owner Work directory
+  shell: "chown -R root:root /opt/terraria"
+  
+- name: Set Permission Server Binary
+  file:
+    path: /opt/terraria/Linux/TerrariaServer.bin.x86_64
+    owner: root
+    group: root
+    mode: '0755'
 
 - name: Creation Terraria User
   shell: "id -u terraria &>/dev/null || useradd -r -m -d /srv/terraria terraria"
@@ -41,17 +53,28 @@
   template:
     src: "serverconfig.txt.j2"
     dest: "/opt/terraria/Linux/serverconfig.txt"
+    owner: root
+    group: root
+    mode: 0664
 
-- name: Configure Systemd
-  synchronize: 
-    src: files/ 
-    dest: /
-
-- name: Set systemd permission
-  shell: "chmod +x /usr/local/bin/terrariad"
+- name: Configure Systemd Service
+  copy: 
+    src: files/terraria.service 
+    dest: /etc/systemd/system/terraria.service
+    owner: root
+    group: root
+    mode: 0664
+    
+- name: Configure Terraria script management
+  copy:
+    src: files/terrariad
+    dest: /usr/local/bin/terrariad
+    owner: root
+    group: root
+    mode: 0755
 
 - name: Start Terraria Server
   service: 
     name: terraira
     enabled: yes 
-    status: restarted
+    status: started

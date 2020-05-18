@@ -6,4 +6,4 @@
 - name: run the main role
   hosts: all
   roles:
-    - {role: ansible-role-terraria}
+    - role: ansible-terraria

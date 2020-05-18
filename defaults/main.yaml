@@ -1,9 +1,12 @@
 ---
 
+# Terraira Server Link Download version (Default 1.4.0.2)
+download_server_link: "https://terraria.org/system/dedicated_servers/archives/000/000/036/original/terraria-server-1402.zip?1589675482"
+
 # Terraria Server Configuration
 
 # Load a world and automatically start the server.
-world: "/var/terraria-worlds/myworld.wld"
+world: "/opt/terraria/worlds/world1.wld"
 
 maxplayers: "8"
 password: "terraria"
@@ -15,13 +18,13 @@ world_size: "1"
 # Sets world difficulty when using -autocreate. Options: 0(normal), 1(expert)
 difficulty: "0"
 
-worldname: "World"
+worldname: "World1"
 
 # Adds additional cheat protection.
 security: "1"
 
 # Sets the folder where world files will be stored
-worldpath: "/var/terraria-worlds"
+worldpath: "/opt/terraria/worlds"
 
 language: "en/US"
 #vailable codes:

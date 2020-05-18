@@ -6,7 +6,6 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       version:
-        - xenial
         - bionic
   galaxy_tags:
     - terraria
