@@ -4,6 +4,6 @@ services:
   molecule:
     image: fminzoni/molecule
     volumes:
-      - .:/root/src/ansible-role-terraria
+      - .:/root/src/ansible-terraria
       - /var/run/docker.sock:/var/run/docker.sock
     working_dir: /root/src/ansible-terraria

@@ -1,22 +1,17 @@
 ---
 
-- name: Update repositories cache and install "unzip" package
+- name: Update repositories cache and install Requirements packages
   apt:
-    name: unzip
+    name: "{{ item }}"
     update_cache: yes
     state: present
-
-- name: Update repositories cache and install "screen" package
-  apt:
-    name: screen
-    update_cache: yes
-    state: present
+   with_items:
+     - unzip
+     - screen
+     - wget
 
 - name: Download Terraria Server
-  get_url:
-    url: "{{ download_server_link }}"
-    dest: "/opt/terraria-server.zip"
-    mode: 0664
+  shell: "wget {{ download_server_link }} -O /opt/terraria-server.zip"
 
 - name: Creates work directory
   file:
@@ -32,6 +27,7 @@
   unarchive:
     src: "/opt/terraria-server.zip"
     dest: "/opt/terraria/release"
+    remote_src: yes
 
 - name: delete unused folder 
   shell: "mv -vn /opt/terraria/release/*/* /opt/terraria/ && rm -Rf /opt/terraria/release/* && mv /opt/terraria-server.zip /opt/terraria/release"
@@ -74,7 +70,8 @@
     mode: 0755
 
 - name: Start Terraria Server
-  service: 
+  systemd:
+    state: started
     name: terraira
-    enabled: yes 
-    status: started
+    daemon_reload: yes
+    enabled: yes
