@@ -5,10 +5,10 @@
     name: "{{ item }}"
     update_cache: yes
     state: present
-   with_items:
-     - unzip
-     - screen
-     - wget
+  with_items:
+    - unzip
+    - screen
+    - wget
 
 - name: Download Terraria Server
   shell: "wget {{ download_server_link }} -O /opt/terraria-server.zip"
