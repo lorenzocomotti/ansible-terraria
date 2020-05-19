@@ -72,6 +72,6 @@
 - name: Start Terraria Server
   systemd:
     state: started
-    name: terraira
+    name: terraria
     daemon_reload: yes
     enabled: yes
