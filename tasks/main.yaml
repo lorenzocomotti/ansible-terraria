@@ -8,49 +8,51 @@
   with_items:
     - unzip
     - screen
-    - wget
 
 - name: Download Terraria Server
-  shell: "wget {{ download_server_link }} -O /opt/terraria-server.zip"
+  get_url:  
+    url: "{{ download_server_link }}" 
+    dest: "/tmp/terraria-server.zip"
+    mode: 0644
+
+- name: Create terraria user
+  user:
+    name: terraria
+    password: NOT_LOGGING_PASSWORD
+    shell: /usr/sbin/nologin
+    state: present
+    createhome: no
+      
 
 - name: Creates work directory
   file:
     path: /opt/terraria
-    state: directory
-
-- name: Creates release directory
-  file:
-    path: /opt/terraria/release
+    owner: terraria
+    group: terraria
     state: directory
 
 - name: Extract terraria.zip into /opt/terraria
   unarchive:
-    src: "/opt/terraria-server.zip"
-    dest: "/opt/terraria/release"
+    src: "/tmp/terraria-server.zip"
+    dest: "/opt/terraria"
+    mode: 0644
+    owner: terraria
+    group: terraria
     remote_src: yes
-
-- name: delete unused folder 
-  shell: "mv -vn /opt/terraria/release/*/* /opt/terraria/ && rm -Rf /opt/terraria/release/* && mv /opt/terraria-server.zip /opt/terraria/release"
-
-- name: Set Owner Work directory
-  shell: "chown -R root:root /opt/terraria"
   
 - name: Set Permission Server Binary
   file:
     path: /opt/terraria/Linux/TerrariaServer.bin.x86_64
-    owner: root
-    group: root
+    owner: terraria
+    group: terraria
     mode: '0755'
-
-- name: Creation Terraria User
-  shell: "id -u terraria &>/dev/null || useradd -r -m -d /srv/terraria terraria"
 
 - name: Creation Configuration File
   template:
     src: "serverconfig.txt.j2"
     dest: "/opt/terraria/Linux/serverconfig.txt"
-    owner: root
-    group: root
+    owner: terraria
+    group: terraria
     mode: 0664
 
 - name: Configure Systemd Service

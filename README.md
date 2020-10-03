@@ -8,7 +8,7 @@ This palybook automatically installs the server, configures the firewall, and in
 
 ## Requirements
 
-This role requires Ansible 2.7 or higher.
+This role requires Ansible 2.4 or higher.
 
 ## Role Variables
 
