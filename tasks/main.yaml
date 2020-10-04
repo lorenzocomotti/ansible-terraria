@@ -19,11 +19,11 @@
   user:
     name: terraria
     password: NOT_LOGGING_PASSWORD
+    home: /opt/terraria
     shell: /usr/sbin/nologin
     state: present
     createhome: no
       
-
 - name: Creates work directory
   file:
     path: /opt/terraria
@@ -35,25 +35,10 @@
   unarchive:
     src: "/tmp/terraria-server.zip"
     dest: "/opt/terraria"
-    mode: 0644
+    mode: 0755
     owner: terraria
     group: terraria
     remote_src: yes
-  
-- name: Set Permission Server Binary
-  file:
-    path: /opt/terraria/Linux/TerrariaServer.bin.x86_64
-    owner: terraria
-    group: terraria
-    mode: '0755'
-
-- name: Creation Configuration File
-  template:
-    src: "serverconfig.txt.j2"
-    dest: "/opt/terraria/Linux/serverconfig.txt"
-    owner: terraria
-    group: terraria
-    mode: 0664
 
 - name: Configure Systemd Service
   copy: 
@@ -62,7 +47,7 @@
     owner: root
     group: root
     mode: 0664
-    
+
 - name: Configure Terraria script management
   copy:
     src: files/terrariad
@@ -70,6 +55,32 @@
     owner: root
     group: root
     mode: 0755
+
+- name: Remove production symlink
+  file:
+   path: "/opt/terraria/current"
+   state: absent
+
+- name: Create production symlink
+  file:
+    src: "/opt/terraria/{{ version }}"
+    dest: "/opt/terraria/current"
+    state: link
+
+- name: Set Permission Server Binary
+  file:
+    path: /opt/terraria/current/Linux/TerrariaServer.bin.x86_64
+    owner: terraria
+    group: terraria
+    mode: '0755'
+
+- name: Creation Configuration File
+  template:
+    src: "serverconfig.txt.j2"
+    dest: "/opt/terraria/current/Linux/serverconfig.txt"
+    owner: terraria
+    group: terraria
+    mode: 0664
 
 - name: Start Terraria Server
   systemd:

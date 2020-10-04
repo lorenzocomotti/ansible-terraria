@@ -1,7 +1,7 @@
 Ansible role: Terraria Server
 
-[![Build Status](https://travis-ci.org/lorenzocomotti/ansible-role-terrariai.svg?branch=master)](https://travis-ci.org/lorenzocomotti/ansible-role-terraria)
-[![Galaxy](https://img.shields.io/badge/galaxy-lorenzocomotti.ansible--role--terraria-blue.svg?style=flat-square)](https://galaxy.ansible.com/lorenzocomotti/ansible-role-terraria)
+[![Build Status](https://travis-ci.org/lorenzocomotti/ansible-terraria.svg?branch=master)](https://travis-ci.org/lorenzocomotti/ansible-terraria)
+[![Galaxy](https://img.shields.io/badge/galaxy-lorenzocomotti.ansible--terraria-blue.svg?style=flat-square)](https://galaxy.ansible.com/lorenzocomotti/ansible-terraria)
 
 Install your Terraira server in your Ubuntu server
 This palybook automatically installs the server, configures the firewall, and integrates management with systemd.<br>

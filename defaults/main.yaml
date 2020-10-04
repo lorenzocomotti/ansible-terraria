@@ -2,6 +2,7 @@
 
 # Terraira Server Link Download version (Default 1.4.0.2)
 download_server_link: "https://terraria.org/system/dedicated_servers/archives/000/000/036/original/terraria-server-1402.zip?1589675482"
+version: 1402
 
 # Terraria Server Configuration
 
